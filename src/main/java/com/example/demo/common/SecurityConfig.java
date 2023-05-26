@@ -43,8 +43,8 @@ public class SecurityConfig {
 		.deleteCookies("JSESSIONID")
 		)
 		.exceptionHandling(exceptions -> exceptions.accessDeniedPage("/403"))
-		//.csrf()
-		//.disable()
+		.csrf()
+		.disable()
 		.build();
 	}
 
