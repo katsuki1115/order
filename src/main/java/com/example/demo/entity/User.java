@@ -45,7 +45,6 @@ public class User extends AbstractEntity implements UserDetails {
 	
 	@Column(length = 255, nullable = false)
 	@NotEmpty(groups = { Create.class, Update.class }, message = "パスワードは必須項目です")
-	@Email(groups = { Create.class, Update.class }, message = "価格は0以上の整数を入力してください")
 	private String password;
 	
 	@Transient

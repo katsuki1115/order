@@ -10,7 +10,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
 @Repository
-public class UserDao implements BaseDao<User> {
+public class UserDao implements BaseDao<User>{
 	@Autowired
 	UserRepository repository;
 	

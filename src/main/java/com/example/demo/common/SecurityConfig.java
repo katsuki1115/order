@@ -24,28 +24,28 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.authorizeHttpRequests(authorize ->
-		authorize
-		.requestMatchers("/webjars/**", "/css/**", "/js/**").permitAll()
-		.requestMatchers("/users/login", "/admin/users/logout", "/users/create", "/error").permitAll()
-		.anyRequest().authenticated()
-		)
-		.formLogin(form ->
-		form
-		.loginProcessingUrl("/users/login")
-		.loginPage("/users/login")
-		.defaultSuccessUrl("/admin")
-		.failureUrl("/users/login?error")
-		)
-		.logout(logout ->
-		logout
-		.logoutUrl("/admin/users/logout")
-		.logoutSuccessUrl("/users/login?logout")
-		.deleteCookies("JSESSIONID")
-		)
-		.exceptionHandling(exceptions -> exceptions.accessDeniedPage("/403"))
-		.csrf()
-		.disable()
-		.build();
+                authorize
+                        .requestMatchers("/webjars/**", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/users/login", "/admin/users/logout", "/users/create", "/error").permitAll()
+                        .anyRequest().authenticated()
+        )
+                .formLogin(form ->
+                        form
+                                .loginProcessingUrl("/users/login")
+                                .loginPage("/users/login")
+                                .defaultSuccessUrl("/admin")
+                                .failureUrl("/users/login?error")
+                )
+                .logout(logout ->
+                        logout
+                                .logoutUrl("/admin/users/logout")
+                                .logoutSuccessUrl("/users/login?logout")
+                                .deleteCookies("JSESSIONID")
+                )
+                .exceptionHandling(exceptions -> exceptions.accessDeniedPage("/403"))
+              
+                
+                .build();
 	}
 
 	@Bean

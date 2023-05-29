@@ -8,13 +8,13 @@
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/users/create}" th:object="${user}" method="post">
+		<form th:action="@{/admin/users/edit}" th:object="${user}" method="post">
 			<ul th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
 				<li th:each="err : ${#fields.errors('*')}">
 					<span th:text="${err}"></span>
 				</li>
 			</ul>
-			<h1 class="page-header">ユーザ登録</h1>
+			<h1 class="page-header">ユーザ編集</h1>
 			<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? error">
 				<label for="email">Email</label>
 				<input class="form-control" type="text" th:field="*{email}">
@@ -24,7 +24,7 @@
 				<input class="form-control" type="password" th:field="*{password}">
 			</div>
 			<div>
-				<input class="btn btn-primary" type="submit" value="登録">
+				<input class="btn btn-primary" type="submit" value="更新">
 			</div>
 		</form>
 	</div>
