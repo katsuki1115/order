@@ -32,7 +32,7 @@
 						<a th:href="@{/users/create}" class="nav-link">ユーザ登録</a>
 					</li>
 				</ul>
-				<ul authorize="authenticated" class="navbar-nav mr-auto">
+				<ul sec:authorize="authenticated" class="navbar-nav mr-auto">
 					<li class="nav-item dropdown">
 						<a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">受注</a>
 						<ul class="dropdown-menu">
@@ -55,7 +55,7 @@
 						</ul>
 					</li>
 				</ul>
-				<ul authorize="authenticated" class="navbar-nav ml-auto">
+				<ul sec:authorize="authenticated" class="navbar-nav ml-auto">
 					<li class ="navbar-text mr-3"><span sec:authentication="name" class="me-2"></span>さん</li>
 					<li class="nav-item dropdown">
 						<a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">管理</a>

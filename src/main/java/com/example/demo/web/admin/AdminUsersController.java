@@ -89,6 +89,10 @@ public class AdminUsersController {
 		return "redirect:/admin";
 	}
 	
+	@GetMapping(value = "/logout")
+	public String logout() {
+		return "users/login";
+	}
 	
 	
 }
