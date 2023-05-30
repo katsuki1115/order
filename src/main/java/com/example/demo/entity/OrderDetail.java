@@ -36,7 +36,7 @@ public class OrderDetail extends AbstractEntity {
 	private Integer unit;
 	
 	@ManyToOne
-	@JoinColumn(name = "order._id")
+	@JoinColumn(name = "order_id")
 	private Order order;
 	
 	@ManyToOne

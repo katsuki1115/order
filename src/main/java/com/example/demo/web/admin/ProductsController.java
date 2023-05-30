@@ -13,18 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.common.FlashData;
-import com.example.demo.entity.Customer;
 import com.example.demo.entity.Product;
 import com.example.demo.service.BaseService;
 
 import jakarta.validation.Valid;
 
-
 @Controller
-@RequestMapping("/admin/customers")
-public class CustomersController {
+@RequestMapping("/admin/products")
+public class ProductsController {
 	@Autowired
-	BaseService<Customer> customerService;
+	BaseService<Product> productService;
 	
 	/*
 	 * 一覧表示
@@ -32,38 +30,38 @@ public class CustomersController {
 	@GetMapping(path = {"", "/"})
 	public String list(Model model) {
 		//全権取得	
-		List<Customer> customers = customerService.findAll();
-		model.addAttribute("customers", customers);
-		return "admin/customers/list";
+		List<Product> products = productService.findAll();
+		model.addAttribute("products", products);
+		return "admin/products/list";
 	}
 	
 	/*
 	 * 新規作成画面表示
 	 */
 	@GetMapping(value = "/create")
-	public String form(Customer customer, Model model) {
-		model.addAttribute("customer", customer);
-		return "admin/customers/create";
+	public String form(Product product, Model model) {
+		model.addAttribute("product", product);
+		return "admin/products/create";
 	}
 	
 	/*
 	 * 新規登録
 	 */
 	@PostMapping(value = "/create")
-	public String register(@Valid Customer customer, BindingResult result, Model model, RedirectAttributes ra) {
+	public String register(@Valid Product product, BindingResult result, Model model, RedirectAttributes ra) {
 		FlashData flash;
 		try {
 			if(result.hasErrors()) {
-				return "admin/customers/create";
+				return "admin/products/create";
 			}
 			//新規登録
-			customerService.save(customer);
+			productService.save(product);
 			flash = new FlashData().success("新規作成しました");
 		} catch (Exception e) {
 			flash  = new FlashData().danger("処理中にエラーが発生しました");
 		}
 		ra.addFlashAttribute("flash", flash);
-		return "redirect:/admin/customers";
+		return "redirect:/admin/products";
 	}
 	
 	/*
@@ -73,35 +71,35 @@ public class CustomersController {
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes ra) {
 		try {
 			//存在確認
-			Customer customer = customerService.findById(id);
-			model.addAttribute("customer", customer);
+			Product product = productService.findById(id);
+			model.addAttribute("product", product);
 		} catch (Exception e) {
 			FlashData flash = new FlashData().danger("該当データがありません");
 			ra.addFlashAttribute("flash", flash);
-			return "redirect:/admin/customers";
+			return "redirect:/admin/products";
 		}
-		return "admin/customers/edit";
+		return "admin/products/edit";
 	}
 	
 	/*
 	 * 更新
 	 */
 	@PostMapping(value = "/edit/{id}")
-	public String update(@PathVariable Integer id, @Valid Customer customer, BindingResult result, Model model, RedirectAttributes ra) {
+	public String update(@PathVariable Integer id, @Valid Product product, BindingResult result, Model model, RedirectAttributes ra) {
 		FlashData flash;
 		try {
 			if(result.hasErrors()) {
-				return "admin/customers/edit";
+				return "admin/products/edit";
 			}
-			customerService.findById(id);
+			productService.findById(id);
 			//新規登録
-			customerService.save(customer);
+			productService.save(product);
 			flash = new FlashData().success("更新しました");
 		} catch (Exception e) {
 			flash  = new FlashData().danger("該当データがありません");
 		}
 		ra.addFlashAttribute("flash", flash);
-		return "redirect:/admin/customers";
+		return "redirect:/admin/products";
 	}
 	
 	@GetMapping(value = "/delete/{id}")
@@ -109,14 +107,12 @@ public class CustomersController {
 		FlashData flash;
 		try {
 			//削除
-			customerService.deleteById(id);
+			productService.deleteById(id);
 			flash = new FlashData().success("削除しました");
 		} catch (Exception e) {
 			flash  = new FlashData().danger("削除できませんでした");
 		}
 		ra.addFlashAttribute("flash", flash);
-		return "redirect:/admin/customers";
+		return "redirect:/admin/products";
 	}
-	
-	
 }
