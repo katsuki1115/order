@@ -28,7 +28,7 @@
 					<td th:text="*{#dates.format(createdAt, 'yyyy年MM月dd日HH時mm分ss秒')}"></td>
 					<td th:text="*{#dates.format(modifiedAt, 'yyyy年MM月dd日HH時mm分ss秒')}"></td>
 					<td class="actions text-nowrap">
-						<a th:href="@{/admin/orsers/edit/{id}(id=*{id})}" class="btn btn-primary">表示</a>
+						<a th:href="@{/admin/orders/view/{id}(id=*{id})}" class="btn btn-primary">表示</a>
 						<a th:href="@{/admin/orders/delete/{id}(id=*{id})}" class="btn btn-danger">削除</a>
 					</td>
 				</tr>

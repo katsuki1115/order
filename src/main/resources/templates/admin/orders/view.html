@@ -8,12 +8,6 @@
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/admin/orders/view/{id}(id=*{id})}" th:object="${orders}" method="post">
-			<ul th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
-				<li th:each="err : ${#fields.errors('*')}">
-					<span th:text="${err}"></span>
-				</li>
-			</ul>
 		<h1>受注表示</h1>
 		<table class="table table-striped mt-4">
 			<thead class="bg-primary text-white">
@@ -27,14 +21,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="order: ${orders}" th:object="${order}">
+				<tr th:each="order: ${order}" th:object="${order}">
 					<td th:text="*{id}"></td>
 					<td th:text="*{name}"></td>
 					<td th:text="*{customer.name}"></td>
 					<td th:text="*{#dates.format(createdAt, 'yyyy年MM月dd日HH時mm分ss秒')}"></td>
 					<td th:text="*{#dates.format(modifiedAt, 'yyyy年MM月dd日HH時mm分ss秒')}"></td>
 					<td class="actions text-nowrap">
-						<a th:href="@{/admin/orsers/edit/{id}(id=*{id})}" class="btn btn-primary">編集</a>
+						<a th:href="@{/admin/orders/edit/{id}(id=*{id})}" class="btn btn-primary">編集</a>
 					</td>
 				</tr>
 			</tbody>
@@ -57,12 +51,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="order: ${orders}" th:object="${order}">
+				<tr th:each="order: ${order.orderDetails}" th:object="${order}">
 					<td th:text="*{id}"></td>
 					<td th:text="*{product.name}"></td>
 					<td th:text="*{product.price}"></td>
 					<td th:text="*{unit}"></td>
-					<td th:text="*{subtototal}"></td>
+					<td th:text="*{unit * product.price}"></td>
 					<td th:text="*{#dates.format(createdAt, 'yyyy年MM月dd日HH時mm分ss秒')}"></td>
 					<td th:text="*{#dates.format(modifiedAt, 'yyyy年MM月dd日HH時mm分ss秒')}"></td>
 					<td class="actions text-nowrap">
@@ -71,8 +65,6 @@
 				</tr>
 			</tbody>
 		</table>
-		
-		</form>
 	</div>
 </body>
 
