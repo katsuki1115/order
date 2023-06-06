@@ -35,7 +35,7 @@
 		</table>
 		<h1>受注詳細</h1>
 		<td class="actions text-nowrap">
-			<a th:href="@{/admin/orserdetails/create/{id}(id=*{id})}" class="btn btn-primary">新規作成</a>
+			<a th:href="@{/admin/orderdetails/create/{id}(id=*{id})}" class="btn btn-primary">新規作成</a>
 		</td>
 		<table class="table table-striped mt-4">
 			<thead class="bg-primary text-white">
@@ -51,16 +51,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="order: ${order.orderDetails}" th:object="${order}">
+				<tr th:each="orderDetail: ${order.orderDetails}" th:object="${orderDetail}">
 					<td th:text="*{id}"></td>
 					<td th:text="*{product.name}"></td>
 					<td th:text="*{product.price}"></td>
 					<td th:text="*{unit}"></td>
-					<td th:text="*{unit * product.price}"></td>
+					<td th:text="*{unit} * *{product.price}"></td>
 					<td th:text="*{#dates.format(createdAt, 'yyyy年MM月dd日HH時mm分ss秒')}"></td>
 					<td th:text="*{#dates.format(modifiedAt, 'yyyy年MM月dd日HH時mm分ss秒')}"></td>
 					<td class="actions text-nowrap">
-						<a th:href="@{/admin/orserdetails/edit/{id}(id=*{id})}" class="btn btn-primary">編集</a>
+						<a th:href="@{/admin/orderdetails/edit/{id}(id=*{id})}" class="btn btn-primary">編集</a>
 					</td>
 				</tr>
 			</tbody>

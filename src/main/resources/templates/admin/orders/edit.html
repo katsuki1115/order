@@ -8,20 +8,19 @@
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/admin/orders/create}" th:object="${order}" method="post">
+		<form th:action="@{/admin/orders/edit/{id}(id=*{id})}" th:object="${order}" method="post">
 			<ul th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
 				<li th:each="err : ${#fields.errors('*')}">
 					<span th:text="${err}"></span>
-					<a th:href="@{/admin/orders}">&larr; ホームに戻る</a>
 				</li>
 			</ul>
-			<h1 class="page-header">受注新規作成</h1>
+			<h1 class="page-header">受注編集</h1>
 			<div class="form-group" th:classappend="${#fields.hasErrors('name')} ? error">
-				<label for="name">受注名</label>
+				<label for="name">名前</label>
 				<input class="form-control" type="text" id="name" th:field="*{name}">
 			</div>
 			<div class="form-group">
-				<label for="customer">顧客</label>
+				<label for="customer">顧客名</label>
 				<select class="form-control" th:field="*{customer}">
 					<th:block th:each="customer : ${@customerRepository.findAll()}">
 						<option th:value="${customer.id}" th:text="${customer.name}"></option>
@@ -29,7 +28,7 @@
 				</select>
 			</div>
 			<div>
-				<input class="btn btn-primary" type="submit" value="登録">
+				<input class="btn btn-primary" type="submit" value="更新">
 			</div>
 		</form>
 	</div>

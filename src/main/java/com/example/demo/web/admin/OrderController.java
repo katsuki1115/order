@@ -67,31 +67,56 @@ public class OrderController {
 	 * 受注表示
 	 */
 	@GetMapping(value = "/view/{id}")
-	public String view(@PathVariable Integer id, Model model, RedirectAttributes ra) {
-		FlashData flash;
+	public String view(@PathVariable Integer id, Model model) {
 		try {
 			Order order = orderService.findById(id);
 			model.addAttribute("order", order);
 		} catch (Exception e) {
-			flash  = new FlashData().danger("処理中にエラーが発生しました");
 		}
 		return "admin/orders/view";
 	}
 	
 	/*
-	 * 更新
+	 * 編集画面表示
 	 */
-//	@GetMapping(value = "/edit/{id}")
-//	public String edit(@PathVariable Integer id, Model model, RedirectAttributes ra) {
-//		try {
-//			//存在確認
-//			Order order = orderService.findById(id);
-//			model.addAttribute("order", order);
-//		} catch (Exception e) {
-//			FlashData flash = new FlashData().danger("該当データがありません");
-//			ra.addFlashAttribute("flash", flash);
-//			return "redirect:/admin/orders";
-//		}
-//		return "admin/orders/edit";
-//	}
+	@GetMapping(value = "/edit/{id}")
+	public String edit(@PathVariable Integer id, Model model, RedirectAttributes ra) {
+		try {
+			//存在確認
+			Order order = orderService.findById(id);
+			model.addAttribute("order", order);
+		} catch (Exception e) {
+			FlashData flash = new FlashData().danger("該当データがありません");
+			ra.addFlashAttribute("flash", flash);
+			return "redirect:/admin/orders";	
+		}
+		return "admin/orders/edit";
+	}
+	
+	/*
+	 * 	更新
+	 */
+	@PostMapping(value = "/edit/{id}")
+	public String update(@PathVariable Integer id, @Valid Order order, BindingResult result, Model model, RedirectAttributes ra) {
+		FlashData flash;
+		try {
+			if(result.hasErrors()) {
+				return "admin/orders/edit";
+			}
+			orderService.findById(id);
+			//新規登録
+			orderService.save(order);
+			flash = new FlashData().success("更新しました");
+		} catch (Exception e) {
+			flash  = new FlashData().danger("該当データがありません");
+		}
+		ra.addFlashAttribute("flash", flash);
+		return "redirect:/admin/orders/view/{id}";
+	}
+	
+	
+	
+	
+	
+	
 }

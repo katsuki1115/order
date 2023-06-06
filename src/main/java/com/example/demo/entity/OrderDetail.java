@@ -9,7 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +30,7 @@ public class OrderDetail extends AbstractEntity {
 	private Integer id;
 	
 	@Column(nullable = false)
-	@NotEmpty(message = "数量が未入力です")
+	@NotNull(message = "数量が未入力です")
 	@Min(value = 0, message = "数量は0以上の整数を入力してください")
 	private Integer unit;
 	
