@@ -8,7 +8,7 @@
 
 <body>
 	<div layout:fragment="content">
-		<form th:action="@{/admin/orderdetails/edit/{orderId}(orderId=${orderId})}" th:object="${orderdetailedit}" method="post">
+		<form th:action="@{/admin/orderdetails/edit/{orderDetailId}(orderDetailId=${orderDetailId})}" th:object="${orderdetailedit}" method="post">
 			<ul th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
 				<li th:each="err : ${#fields.errors('*')}">
 					<span th:text="${err}"></span>

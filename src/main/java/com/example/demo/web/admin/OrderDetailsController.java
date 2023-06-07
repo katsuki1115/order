@@ -43,10 +43,12 @@ public class OrderDetailsController {
 		FlashData flash;
 		try {
 			if(result.hasErrors()) {
-				return "admin/orderdetails/create/" + orderId;
+				model.addAttribute("orderdetail", orderdetail);
+				model.addAttribute("orderId", orderId); 
+				return "admin/orderdetails/create";
 			}
-			Order order = orderService.findById(orderId);
-			orderdetail.setOrder(order);
+			Order orderObject = orderService.findById(orderId);
+			orderdetail.setOrder(orderObject);
 			//新規登録
 			orderdetailService.save(orderdetail);
 			flash = new FlashData().success("新規作成しました");
@@ -59,32 +61,40 @@ public class OrderDetailsController {
 	
 	
 	
-	@GetMapping(value = "/edit/{orderId}")
-	public String edit(@PathVariable Integer orderId, Model model, OrderDetail orderdetail) {
+	@GetMapping(value = "/edit/{orderDetailId}")
+	public String edit(@PathVariable Integer orderDetailId, Model model, OrderDetail orderdetail) {
 		try {
 			//存在確認
-			OrderDetail orderdetailedit = orderdetailService.findById(orderId);
+			OrderDetail orderdetailedit = orderdetailService.findById(orderDetailId);
 			model.addAttribute("orderdetailedit", orderdetailedit);
+			model.addAttribute("orderDetailId", orderDetailId); 
 		} catch (Exception e) {
 			return "redirect:/admin/orders";	
 		}
 		return "admin/orderdetails/edit";
 	}
 	
-	@PostMapping(value = "/edit/{orderId}")
-	public String update_edit(@PathVariable Integer orderId, @Valid OrderDetail orderdetail, BindingResult result, Model model, RedirectAttributes ra) {
+	@PostMapping(value = "/edit/{orderDetailId}")
+	public String update_edit(@PathVariable Integer orderDetailId, @Valid OrderDetail orderdetail, BindingResult result, Model model, RedirectAttributes ra) {
 		FlashData flash;
+		Integer orderId = null;
 		try {
 			if(result.hasErrors()) {
-				return "admin/orderdetails/edit/" + orderId;
+				OrderDetail orderdetailedit = orderdetailService.findById(orderDetailId);
+				model.addAttribute("orderdetailedit", orderdetailedit);
+				model.addAttribute("orderDetailId", orderDetailId); 
+				return "admin/orderdetails/edit";
 			}
-			Order orderedit = orderService.findById(orderId);
-			//新規登録
-			orderdetail.setOrder(orderedit);
+			OrderDetail orderdetailObject = orderdetailService.findById(orderDetailId);
+			Order order = orderdetailObject.getOrder();
+			orderId = order.getId();
+			orderdetail.setOrder(order);
+			orderdetail.setId(orderId);
 			orderdetailService.save(orderdetail);
 			flash = new FlashData().success("更新しました");
 		} catch (Exception e) {
-			flash  = new FlashData().danger("該当データがありません");
+			flash  = new FlashData().danger("エラー");
+			return "redirect:/admin/orders";
 		}
 		ra.addFlashAttribute("flash", flash);
 		return "redirect:/admin/orders/view/" + orderId;
